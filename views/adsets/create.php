@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Adsets */
 
-$this->title = 'Create Adsets';
-$this->params['breadcrumbs'][] = ['label' => 'Adsets', 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Adsets');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Adsets'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="adsets-create">
