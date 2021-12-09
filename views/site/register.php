@@ -17,31 +17,31 @@ use yii\widgets\ActiveForm;
 ]);
 ?>
 <div class="form-group">
- <?= $form->field($model, "username")->input("text") ?>   
+ <?= $form->field($model, "username")->label('Nombre de usuario') ?>   
 </div>
 
 <div class="form-group">
- <?= $form->field($model, "full_name")->input("text") ?>   
+ <?= $form->field($model, "full_name")->label('Nombre completo') ?>   
 </div>
 
 <div class="form-group">
- <?= $form->field($model, "last_name")->input("text") ?>   
+ <?= $form->field($model, "last_name")->label('Apellidos') ?>   
 </div>
 
 <div class="form-group">
- <?= $form->field($model, "email")->input("email") ?>   
+ <?= $form->field($model, "email")->input("email")->label('Correo') ?>   
 </div>
 
 <div class="form-group">
- <?= $form->field($model, "phone")->input("text") ?>   
+ <?= $form->field($model, "phone")->input("text")->label('Telefono') ?>   
 </div>
 
 <div class="form-group">
- <?= $form->field($model, "password")->input("password") ?>   
+ <?= $form->field($model, "password")->input("password")->label('Contraseña') ?>   
 </div>
 
 <div class="form-group">
- <?= $form->field($model, "password_repeat")->input("password") ?>   
+ <?= $form->field($model, "password_repeat")->input("password")->label('Repita la contraseña') ?>   
 </div>
 
 <?=Html::submitButton("Registrar",["class"=>"btn btn-primary"])?>

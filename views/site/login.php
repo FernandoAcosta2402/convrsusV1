@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>Login to stay connected:</p>
 
+
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'layout' => 'horizontal',
@@ -32,12 +33,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'template' => "<div class=\"offset-lg-1 col-lg-3 custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
         ]) ?>
 
+        
+
         <div class="form-group">
         <div class="offset-lg-1 col-lg-11">
             <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
         </div>
+        
         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
         <script>
+
+            
         function onSignIn(googleUser) {
 
             // Useful data for your client-side scripts:
@@ -58,9 +64,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     <?php ActiveForm::end(); ?>
-
+<!-- 
     <div class="offset-lg-1" style="color:#999;">
         You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
         To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-    </div>
+    </div> -->
 </div>
