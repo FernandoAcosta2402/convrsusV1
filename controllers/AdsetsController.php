@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Adsets;
+use app\models\Campaing;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -50,8 +51,13 @@ class AdsetsController extends Controller
      */
     public function actionIndex()
     {
+
+        $model = new Campaing;
+        $IdCampaing = $model->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => Adsets::find(),
+            // 'query' => Adsets::find()
+            'query' => Adsets::find()->where(["id_campaing"=>$IdCampaing])
+           // 'query' => Adsets::find()-> where(["id_campaing"=>$IdUser])
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -65,7 +71,7 @@ class AdsetsController extends Controller
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 

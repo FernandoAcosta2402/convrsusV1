@@ -42,11 +42,10 @@ class CampaingController extends Controller
      */
     public function actionIndex()
     {
-
-
+        $IdUser=Yii::$app->user->identity->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => Campaing::find()
-
+            //CAMPAÑAS POR USER LOGUEADO
+            'query' => Campaing::find()-> where(["id_user"=>$IdUser])
                     
             /*
             'pagination' => [
@@ -61,7 +60,7 @@ class CampaingController extends Controller
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,'IdUser'=>$IdUser
         ]);
     }
 
@@ -86,6 +85,8 @@ class CampaingController extends Controller
     public function actionCreate()
     {
         $model = new Campaing();
+        
+    
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
