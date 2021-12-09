@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -14,6 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="campaing-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    
+    <!-- PRUEBA IMPRIMIR ID  -->
+    <h1><?= Html::encode($IdUser) ?></h1>
 
     <p>
     <?= Html::a(Yii::t('app', 'Create Campaing'), ['create'], ['class' => 'btn btn-success']) ?>

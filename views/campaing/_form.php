@@ -20,8 +20,9 @@ use yii\helpers\HtmlPurifier;
 <div class="campaing-form">
 
     <?php $form = ActiveForm::begin();?>
+
     
-    <?= $form->field($model, 'id_user')-> textInput()?>
+    <?= $form->field($model, 'id_user')->textInput(['readonly' => true, 'value' => Yii::$app->user->identity->id]) ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
@@ -30,7 +31,8 @@ use yii\helpers\HtmlPurifier;
     <?= $form->field($model, 'fecha_termino')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']);
+         ?>
     </div>
 
     <?php ActiveForm::end(); ?>
