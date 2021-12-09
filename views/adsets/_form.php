@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Campaing;
-
+$IdUser=Yii::$app->user->identity->id;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Adsets */
@@ -14,7 +14,7 @@ use app\models\Campaing;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_campaing')->dropDownList(\yii\helpers\ArrayHelper::map(Campaing::find()->all(), 'id', 'nombre'), ['prompt' => 'Selecciona la campania']); ?>
+    <?= $form->field($model, 'id_campaing')->dropDownList(\yii\helpers\ArrayHelper::map(Campaing::find()->where(["id_user"=>$IdUser])->all(), 'id', 'nombre'), ['prompt' => 'Selecciona la campania']); ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
