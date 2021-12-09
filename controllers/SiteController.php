@@ -27,7 +27,7 @@ class SiteController extends Controller {
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['login'],
+                        'actions' => ['login','error'],
                         'allow' => true,
                     ],
 
@@ -71,6 +71,25 @@ class SiteController extends Controller {
     public function actionIndex() {
         return $this->render('index');
     }
+
+    // public function actionGoogle(){
+
+    //     $oauth2 = new OAuth2(
+    //         [
+    //             'clientId' => $clientId,
+    //             'clientSecret' => $clientSecret,
+    //             'authorizationUri' => self::AUTHORIZATION_URI,
+    //             'redirectUri' => $redirectUrl . self::OAUTH2_CALLBACK_PATH,
+    //             'tokenCredentialUri' => CredentialsLoader::TOKEN_CREDENTIAL_URI,
+    //             'scope' => self::SCOPE,
+    //             // Create a 'state' token to prevent request forgery. See
+    //             // https://developers.google.com/identity/protocols/OpenIDConnect#createxsrftoken
+    //             // for details.
+    //             'state' => sha1(openssl_random_pseudo_bytes(1024))
+    //         ]
+    //     );
+    // }
+
 
   
 //---------------------------------------REGISTRO CON CONFIRMACION DE CORREO ---------------------------------
@@ -239,10 +258,13 @@ private function randKey($str='', $long=0)
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
-
         $model->password = '';
+        
+//-----------------------------------------------
+    
+
         return $this->render('login', [
-                    'model' => $model,
+                    'model' => $model
         ]);
     }
 

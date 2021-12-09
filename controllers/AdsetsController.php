@@ -32,6 +32,7 @@ class AdsetsController extends Controller
                         ]
                     ]
                 ],
+                
             //-----------------------------------------------------
                 'verbs' => [
                     'class' => VerbFilter::className(),
@@ -74,10 +75,10 @@ class AdsetsController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_user)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id_user),
+            'model' => $this->findModel($id),
         ]);
     }
 

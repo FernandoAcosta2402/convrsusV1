@@ -3,11 +3,15 @@
 namespace app\controllers;
 
 use app\models\Campaing;
+use app\models\user;
 use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Users;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use Yii;
 
 /**
  * CampaingController implements the CRUD actions for Campaing model.
@@ -22,17 +26,6 @@ class CampaingController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                //CONTROL DE ACCESO Backend
-                'access'=>[
-                    'class'=>AccessControl::className(),
-                    'rules'=>[
-                        [
-                            'allow'=>true,
-                            'roles'=>['@']
-                        ]
-                    ]
-                ],
-                // ----------------------------------
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -49,8 +42,12 @@ class CampaingController extends Controller
      */
     public function actionIndex()
     {
+
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Campaing::find(),
+            'query' => Campaing::find()
+
+                    
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -64,7 +61,7 @@ class CampaingController extends Controller
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 
@@ -152,4 +149,24 @@ class CampaingController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+//------------------------------------------------------------------------------------
+//     public function actionObtenerId()
+//  {
+//     $table = new Users;
+//     if (Yii::$app->request->get())
+//     {
+   
+//         //Obtenemos el valor de los parámetros get
+//         $id = Html::encode($_GET["id"]);
+//         return $this->render("index", ["id" => $id]);
+    
+       
+//     }}
+
+
+
+
+   
+
 }
