@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "campaing".
  *
  * @property int $id
+ * @property int $id_user
  * @property string $nombre
  * @property string $fecha_inicio
  * @property string $fecha_termino
@@ -30,7 +31,8 @@ class Campaing extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'fecha_inicio', 'fecha_termino'], 'required'],
+            [['id_user', 'nombre', 'fecha_inicio', 'fecha_termino'], 'required'],
+            [['id_user'], 'integer'],
             [['fecha_inicio', 'fecha_termino'], 'safe'],
             [['nombre'], 'string', 'max' => 50],
         ];
@@ -43,7 +45,7 @@ class Campaing extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id'=>'USER_ID',
+            'id_user' => 'Id User',
             'nombre' => 'Nombre',
             'fecha_inicio' => 'Fecha Inicio',
             'fecha_termino' => 'Fecha Termino',
@@ -60,8 +62,8 @@ class Campaing extends \yii\db\ActiveRecord
         return $this->hasMany(Adsets::className(), ['id_campaing' => 'id']);
     }
 
-    public function getUser()
-    {
-        return $this->hasOne(Users::className(), ['id_campaing' => 'user_id']);
-    }
+
 }
+
+
+
