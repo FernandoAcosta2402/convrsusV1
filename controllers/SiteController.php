@@ -13,7 +13,8 @@ use yii\widgets\ActiveForm;
 use app\models\LoginForm;
 use app\models\FormRegister;
 use app\models\Users;
-
+use utils\GoogleApi\GoogleApi;
+//use utils\GoogleApi\GoogleApi as GoogleApiGoogleApi;
 
 class SiteController extends Controller {
 
@@ -72,6 +73,21 @@ class SiteController extends Controller {
         return $this->render('index');
     }
 
+    // ------------------------------- GOOGLE --------------------------------
+
+
+    public function actionGoogle()
+
+        {
+            return GoogleApi::login();
+        }
+    
+      public function actionRedirect()
+        {
+            return "<pre>".print_r($_GET, true)."</pre>";
+        }
+
+    
     // public function actionGoogle(){
 
     //     $oauth2 = new OAuth2(

@@ -2,7 +2,7 @@
 
  namespace app\models;
  use yii;
- use yii\base\model;
+ use yii\base\Model;
  use app\models\Users;
 
 class FormRegister extends model{
