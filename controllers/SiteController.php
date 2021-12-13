@@ -13,6 +13,7 @@ use yii\widgets\ActiveForm;
 use app\models\LoginForm;
 use app\models\FormRegister;
 use app\models\Users;
+use app\utils\GoogleApi;
 
 
 class SiteController extends Controller {
@@ -72,7 +73,9 @@ class SiteController extends Controller {
         return $this->render('index');
     }
 
-    // public function actionGoogle(){
+    public function actionGoogle()
+    {
+        //return GoogleApi::login();
 
     //     $oauth2 = new OAuth2(
     //         [
@@ -88,7 +91,17 @@ class SiteController extends Controller {
     //             'state' => sha1(openssl_random_pseudo_bytes(1024))
     //         ]
     //     );
-    // }
+    }
+    public function actionRedirect()
+    {
+        //Esta liena es para ver que es lo que regresa la respuesta de google, ya que de aqui deben obtener la variable $code
+        /* return "<pre>".print_r($_GET, true)."</pre>"; */
+        /* a partir de aqui es el proceso para obtener el refreshtoken con la variable $code obtenida del get */
+
+        return "<pre>".print_r(GoogleApi::getRefreshTocken($_GET["code"]), true)."</pre>";
+
+        /* */
+    }
 
 
   
