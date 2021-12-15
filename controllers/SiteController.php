@@ -76,16 +76,16 @@ class SiteController extends Controller {
     // ------------------------------- GOOGLE --------------------------------
 
 
-    public function actionGoogle()
+    // public function actionGoogle()
 
-        {
-            return GoogleApi::login();
-        }
+    //     {
+    //         return GoogleApi::login();
+    //     }
     
-      public function actionRedirect()
-        {
-            return "<pre>".print_r($_GET, true)."</pre>";
-        }
+    //   public function actionRedirect()
+    //     {
+    //         return "<pre>".print_r($_GET, true)."</pre>";
+    //     }
 
     
     // public function actionGoogle(){

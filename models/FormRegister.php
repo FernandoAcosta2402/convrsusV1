@@ -5,7 +5,7 @@
  use yii\base\Model;
  use app\models\Users;
 
-class FormRegister extends model{
+class FormRegister extends Model{
  
     public $username;
     public $full_name;
