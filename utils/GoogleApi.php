@@ -5,6 +5,16 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Google\Auth\CredentialsLoader;
 use Google\Auth\OAuth2;
+use Google\AdsApi\AdWords\AdWordsServices;
+use Google\AdsApi\AdWords\AdWordsSession;
+use Google\AdsApi\AdWords\AdWordsSessionBuilder;
+use Google\AdsApi\AdWords\v201809\cm\OrderBy;
+use Google\AdsApi\AdWords\v201809\cm\Paging;
+use Google\AdsApi\AdWords\v201809\cm\Selector;
+use Google\AdsApi\AdWords\v201809\cm\SortOrder;
+use Google\AdsApi\AdWords\v201809\mcm\ManagedCustomer;
+use Google\AdsApi\AdWords\v201809\mcm\ManagedCustomerService;
+use Google\AdsApi\Common\OAuth2TokenBuilder;
 
 class GoogleApi
 {
@@ -30,7 +40,7 @@ class GoogleApi
      * @var string the redirect URI for OAuth2 installed application flows
      * @see https://developers.google.com/identity/protocols/OAuth2InstalledApp#formingtheurl
      */
-    const REDIRECT_URI = 'https://dev.convrsus.ai/~estevar/convrsusV1/web/?r=site/redirect';
+    const REDIRECT_URI = 'https://dev.convrsus.ai/~estevar/convrsusV1/web/google-actions/getrefreshtoken';
     
 
     const CLIENT_ID = "130187367003-rrae1b66bhu6ncc8aj027uub94m9s7mk.apps.googleusercontent.com";
@@ -39,9 +49,9 @@ class GoogleApi
 
     var $session = null;
 
-    function __contruct($userID){
-
-        $oAuth2Credential = (new OAuth2TokenBuilder())->withClientId($this->CLIENT_ID)->withClientSecret($this->CLIENT_SECRET)->withRefreshToken($this->refresh_token)->build();
+    function __contruct($userID = null){
+        $refresh_token = "1//0fK13KtZtl2AoCgYIARAAGA8SNwF-L9IrPBU0dp-2IuuPfmgQX69GD4cEldEtolcYt0Jc5Gb_ko4aSm-aiGq1N9zXkioVxXwxJRQ";
+        $oAuth2Credential = (new OAuth2TokenBuilder())->withClientId($this->CLIENT_ID)->withClientSecret($this->CLIENT_SECRET)->withRefreshToken($refresh_token)->build();
         $this->session = (new AdWordsSessionBuilder())->defaultOptionals()->withOAuth2Credential($oAuth2Credential)->withDeveloperToken($this->DEVELOPER_TOKEN)->build();
     }
 
@@ -80,8 +90,112 @@ class GoogleApi
         return $authToken;
     }
 
-    public function auth(){
-        
+    public function getAccountHierachi()
+    {
+        $adWordsServices = new AdWordsServices();
+        $managedCustomerService = $adWordsServices->get(
+            $this->session,
+            ManagedCustomerService::class
+        );
+
+        // Create selector.
+        $selector = new Selector();
+        $selector->setFields(['CustomerId', 'Name']);
+        $selector->setOrdering([new OrderBy('CustomerId', SortOrder::ASCENDING)]);
+        $selector->setPaging(new Paging(0, self::PAGE_LIMIT));
+
+        // Maps from customer IDs to accounts and links.
+        $customerIdsToAccounts = [];
+        $customerIdsToChildLinks = [];
+        $customerIdsToParentLinks = [];
+
+        $totalNumEntries = 0;
+        do {
+            // Make the get request.
+            $page = $managedCustomerService->get($selector);
+
+            // Create links between manager and clients.
+            if ($page->getEntries() !== null) {
+                $totalNumEntries = $page->getTotalNumEntries();
+                if ($page->getLinks() !== null) {
+                    foreach ($page->getLinks() as $link) {
+                        // Cast the indexes to string to avoid the issue when 32-bit PHP
+                        // automatically changes the IDs that are larger than the 32-bit max
+                        // integer value to negative numbers.
+                        $managerCustomerId = strval($link->getManagerCustomerId());
+                        $customerIdsToChildLinks[$managerCustomerId][] = $link;
+                        $clientCustomerId = strval($link->getClientCustomerId());
+                        $customerIdsToParentLinks[$clientCustomerId] = $link;
+                    }
+                }
+                foreach ($page->getEntries() as $account) {
+                    $customerIdsToAccounts[strval($account->getCustomerId())] = $account;
+                }
+            }
+
+            // Advance the paging index.
+            $selector->getPaging()->setStartIndex(
+                $selector->getPaging()->getStartIndex() + self::PAGE_LIMIT
+            );
+        } while ($selector->getPaging()->getStartIndex() < $totalNumEntries);
+
+        // Find the root account.
+        $rootAccount = null;
+        foreach ($customerIdsToAccounts as $account) {
+            if (!array_key_exists(
+                $account->getCustomerId(),
+                $customerIdsToParentLinks
+            )) {
+                $rootAccount = $account;
+                break;
+            }
+        }
+        if ($rootAccount !== null) {
+            // Display results.
+           return  $this->printAccountHierarchy(
+                $rootAccount,
+                $customerIdsToAccounts,
+                $customerIdsToChildLinks
+            );
+        } else {
+            return [];
+        }
+    }
+
+    public function printAccountHierarchy(
+        $account,
+        $customerIdsToAccounts,
+        $customerIdsToChildLinks,
+        $depth = null,
+        $accountsHierachi = []
+    ) {
+        if ($depth === null) {
+            echo "(Customer ID, Account Name)<br>";
+            $this->printAccountHierarchy(
+                $account,
+                $customerIdsToAccounts,
+                $customerIdsToChildLinks,
+                0,
+                $accountsHierachi
+            );
+
+            return $accountsHierachi;
+        }
+
+        $customerId = $account->getCustomerId();
+        $accountsHierachi[] = ["depth"=>$depth * 2, "CustomerID"=>$account->getCustomerId(), "AccountName"=>$account->getName()];
+
+        if (array_key_exists($customerId, $customerIdsToChildLinks)) {
+            foreach ($customerIdsToChildLinks[strval($customerId)] as $childLink) {
+                $childAccount = $customerIdsToAccounts[strval($childLink->getClientCustomerId())];
+                $this->printAccountHierarchy(
+                    $childAccount,
+                    $customerIdsToAccounts,
+                    $customerIdsToChildLinks,
+                    $depth + 1
+                );
+            }
+        }
     }
 
 }
