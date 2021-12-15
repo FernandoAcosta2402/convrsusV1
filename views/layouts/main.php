@@ -116,8 +116,11 @@ AppAsset::register($this);
             ['label' => 'Asets', 'url' => ['/adsets/index']])
             :(""),
           //------------------------
-        
-            ['label' => 'Registro', 'url' => ['/site/register']],
+          (Yii::$app->user->isGuest)?(
+            ['label' => 'Registro', 'url' => ['/site/register']])
+            :(""),
+            
+            //['label' => 'Registro', 'url' => ['/site/register']],
           Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : ('<li>'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
             . Html::submitButton(
