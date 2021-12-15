@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 <h3><?= $msg ?></h3>
 
-<h1>Registro de nuevos usuarios</h1>
+<h1><?=\Yii::t('app', 'Registro de nuevos usuarios') ?></h1>
 <?php $form = ActiveForm::begin([
         // "method"=>"post",
         // 'enableClientValidation'=>true,
@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 ]);
 ?>
 <div class="form-group">
- <?= $form->field($model, "username")->label('Nombre de usuario') ?>   
+ <?= $form->field($model, "username")->label(\Yii::t('app', 'Nombre de usuario')) ?>   
 </div>
 
 <div class="form-group">

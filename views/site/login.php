@@ -10,36 +10,38 @@ use yii\bootstrap4\Html;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Login to stay connected:</p>
 
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 col-form-label'],
+            //'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "<div class=\"col-lg-12\">
+            <div class=\"form-group\">
+               <label for=\"email\" class=\"form-label\">{label}</label>
+               {input}
+            </div>
+         </div>",
+            'labelOptions' => ['class' => ''],
         ],
     ]); ?>
 
-        <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+<div class="row">
+        <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']]) ?>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'password')->passwordInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']]) ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"offset-lg-1 col-lg-3 custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
-
-        
-
-        <div class="form-group">
-        <div class="offset-lg-1 col-lg-11">
-            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-        </div>
-        
+            'template' => "<div class=\"form-check mb-3\">
+            {input}
+            <label class=\"form-check-label\" for=\"LoginForm_rememberMe\">Remember Me</label>
+         </div>",
+        'inputOptions'=>['class'=>'form-check-input']]) ?>
+</row>
+<div class="d-flex justify-content-center">
+    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+</div>
         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
         <script>
 
@@ -60,8 +62,27 @@ $this->params['breadcrumbs'][] = $this->title;
             console.log("ID Token: " + id_token);
         }
         </script>
-    </div>
-        </div>
+        
+        <p class="text-center my-3">or sign in with other accounts?</p>
+                              <div class="d-flex justify-content-center">
+                                 <ul class="list-group list-group-horizontal list-group-flush">
+                                    <li class="list-group-item border-0 pb-0">
+                                       <a href="#"><img src="../../assets/images/brands/fb.svg" alt="fb"></a>
+                                    </li>
+                                    <li class="list-group-item border-0 pb-0">
+                                       <a href="#"><img src="../../assets/images/brands/gm.svg" alt="gm"></a>
+                                    </li>
+                                    <li class="list-group-item border-0 pb-0">
+                                       <a href="#"><img src="../../assets/images/brands/im.svg" alt="im"></a>
+                                    </li>
+                                    <li class="list-group-item border-0 pb-0">
+                                       <a href="#"><img src="../../assets/images/brands/li.svg" alt="li"></a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              <p class="mt-3 text-center">
+                                 Don’t have an account? <a href="sign-up.html" class="text-underline">Click here to sign up.</a>
+                              </p>
 
     <?php ActiveForm::end(); ?>
 <!-- 

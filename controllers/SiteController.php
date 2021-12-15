@@ -250,6 +250,7 @@ private function randKey($str='', $long=0)
      * @return Response|string
      */
     public function actionLogin() {
+        $this->layout = "login";
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }

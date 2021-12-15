@@ -9,6 +9,7 @@ use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -27,19 +28,19 @@ AppAsset::register($this);
   <!-- Fin de acceso a google -->
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+  <link rel="shortcut icon" href="<?=Url::base()?>/../assets/images/favicon.ico" />
   <!-- Library / Plugin Css Build -->
-  <link rel="stylesheet" href="../assets/css/core/libs.min.css" />
+  <link rel="stylesheet" href="<?=Url::base()?>/../assets/css/core/libs.min.css" />
   <!-- Hope Ui Design System Css -->
-  <link rel="stylesheet" href="../assets/css/hope-ui.min.css?v=1.1.0" />
+  <link rel="stylesheet" href="<?=Url::base()?>/../assets/css/hope-ui.min.css?v=1.1.0" />
   <!-- Custom Css -->
-  <link rel="stylesheet" href="../assets/css/custom.min.css?v=1.1.0" />
+  <link rel="stylesheet" href="<?=Url::base()?>/../assets/css/custom.min.css?v=1.1.0" />
 
   <!-- Dark Css -->
-  <link rel="stylesheet" href="../assets/css/dark.min.css" />
+  <link rel="stylesheet" href="<?=Url::base()?>/../assets/css/dark.min.css" />
 
   <!-- RTL Css -->
-  <link rel="stylesheet" href="../assets/css/rtl.min.css" />
+  <link rel="stylesheet" href="<?=Url::base()?>/../assets/css/rtl.min.css" />
   <?php $this->registerCsrfMetaTags() ?>
   <title><?= Html::encode($this->title) ?></title>
   <?php $this->head() ?>
