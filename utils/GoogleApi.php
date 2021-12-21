@@ -18,6 +18,8 @@ use Google\AdsApi\Common\OAuth2TokenBuilder;
 
 class GoogleApi
 {
+    const PAGE_LIMIT = 500;
+
     /**
      * @var string the OAuth2 scope for the AdWords API
      * @see https://developers.google.com/adwords/api/docs/guides/authentication#scope
@@ -49,10 +51,10 @@ class GoogleApi
 
     var $session = null;
 
-    function __contruct($userID = null){
+    function __construct($userID = null){
         $refresh_token = "1//0fK13KtZtl2AoCgYIARAAGA8SNwF-L9IrPBU0dp-2IuuPfmgQX69GD4cEldEtolcYt0Jc5Gb_ko4aSm-aiGq1N9zXkioVxXwxJRQ";
-        $oAuth2Credential = (new OAuth2TokenBuilder())->withClientId($this->CLIENT_ID)->withClientSecret($this->CLIENT_SECRET)->withRefreshToken($refresh_token)->build();
-        $this->session = (new AdWordsSessionBuilder())->defaultOptionals()->withOAuth2Credential($oAuth2Credential)->withDeveloperToken($this->DEVELOPER_TOKEN)->build();
+        $oAuth2Credential = (new OAuth2TokenBuilder())->withClientId(self::CLIENT_ID)->withClientSecret(self::CLIENT_SECRET)->withRefreshToken($refresh_token)->build();
+        $this->session = (new AdWordsSessionBuilder())->withOAuth2Credential($oAuth2Credential)->withDeveloperToken(self::DEVELOPER_TOKEN)->build();
     }
 
     public static function login()
@@ -152,11 +154,38 @@ class GoogleApi
         }
         if ($rootAccount !== null) {
             // Display results.
-           return  $this->printAccountHierarchy(
+           $accountsHierachi = [];
+           $this->printAccountHierarchy(
                 $rootAccount,
                 $customerIdsToAccounts,
-                $customerIdsToChildLinks
+                $customerIdsToChildLinks,
+                null,
+                $accountsHierachi
             );
+            return $accountsHierachi;
+            /*$result_array = [];
+            $ids = [];
+            $new_id = 0;
+            $depth = 0;
+            foreach($accountsHierachi as $key => $cur_account){
+                if($new_id==0){
+                    $new_id = $cur_account['CustomerID'];
+                    $result_array[$new_id] = ["AccountName"=>$cur_account["AccountName"]];
+                }
+                else if($depth < $cur_account['depth']){
+                    $depth = $cur_account['depth'];
+                    array_push($ids, $new_id);
+                    $new_id = $cur_account['CustomerID'];
+                }
+                else if($depth > $cur_account['depth']){
+                    $depth = $cur_account['depth'];
+                    $new_id = array_pop($ids);
+                }
+                else{
+
+                }
+                
+            }/**/
         } else {
             return [];
         }
@@ -167,10 +196,10 @@ class GoogleApi
         $customerIdsToAccounts,
         $customerIdsToChildLinks,
         $depth = null,
-        $accountsHierachi = []
+        &$accountsHierachi
     ) {
         if ($depth === null) {
-            echo "(Customer ID, Account Name)<br>";
+            //echo "(Customer ID, Account Name)<br>";
             $this->printAccountHierarchy(
                 $account,
                 $customerIdsToAccounts,
@@ -183,7 +212,8 @@ class GoogleApi
         }
 
         $customerId = $account->getCustomerId();
-        $accountsHierachi[] = ["depth"=>$depth * 2, "CustomerID"=>$account->getCustomerId(), "AccountName"=>$account->getName()];
+        $_account = ["CustomerId"=>$customerId, "AccountName"=>$account->getName(), "Accounts"=>[]];
+        
 
         if (array_key_exists($customerId, $customerIdsToChildLinks)) {
             foreach ($customerIdsToChildLinks[strval($customerId)] as $childLink) {
@@ -192,10 +222,12 @@ class GoogleApi
                     $childAccount,
                     $customerIdsToAccounts,
                     $customerIdsToChildLinks,
-                    $depth + 1
+                    $depth + 1,
+                    $_account["Accounts"]
                 );
             }
         }
+        $accountsHierachi[] = $_account;
     }
 
 }

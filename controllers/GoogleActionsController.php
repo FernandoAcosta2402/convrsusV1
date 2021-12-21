@@ -30,9 +30,9 @@ class GoogleActionsController extends \yii\web\Controller
 
     public function actionSelectaccount()
     {
-        $google = new GoogleApi();
+        $google = new GoogleApi(null);
 
-        return "<pre>".$google->getAccountHierachi()."<pre>";
+        return "<pre>".print_r($google->getAccountHierachi(),true)."<pre>";
         //return $this->render('selectaccount');
     }
 
