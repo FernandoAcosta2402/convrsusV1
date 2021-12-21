@@ -48,7 +48,6 @@ AppAsset::register($this);
 
 <body class="d-flex flex-column h-100">
   <?php $this->beginBody() ?>
-
   <header>
     <?php
   
@@ -168,7 +167,7 @@ AppAsset::register($this);
         </nav>
   </main>
 
-  <footer class="footer mt-auto py-3 text-muted">
+  <!-- <footer class="footer mt-auto py-3 text-muted">
     <div class="footer-body">
       <ul class="left-panel list-inline mb-0 p-0">
         <li class="list-inline-item"><a href="../dashboard/extra/privacy-policy.html">Privacy Policy</a>
@@ -187,7 +186,7 @@ AppAsset::register($this);
         </span> by <a href="https://iqonic.design/">IQONIC Design</a>.
       </div>
     </div>
-  </footer>
+  </footer> -->
   <!-- Footer Section End -->
 
   <?php $this->endBody() ?>

@@ -24,11 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
          </div>",
             'labelOptions' => ['class' => ''],
+
+            
         ],
     ]); ?>
 
 <div class="row">
-        <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']]) ?>
+        <?= $form->field($model, 'email')->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']]) ?>
 
         <?= $form->field($model, 'password')->passwordInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']]) ?>
 
@@ -67,27 +69,22 @@ $this->params['breadcrumbs'][] = $this->title;
                               <div class="d-flex justify-content-center">
                                  <ul class="list-group list-group-horizontal list-group-flush">
                                     <li class="list-group-item border-0 pb-0">
-                                       <a href="#"><img src="../../assets/images/brands/fb.svg" alt="fb"></a>
+                                       <a href="#"><img src="../assets/images/brands/fb.svg" alt="fb"></a>
                                     </li>
                                     <li class="list-group-item border-0 pb-0">
-                                       <a href="#"><img src="../../assets/images/brands/gm.svg" alt="gm"></a>
+                                       <a href="#"><img src="../assets/images/brands/gm.svg" alt="gm"></a>
                                     </li>
                                     <li class="list-group-item border-0 pb-0">
-                                       <a href="#"><img src="../../assets/images/brands/im.svg" alt="im"></a>
+                                       <a href="#"><img src="../assets/images/brands/im.svg" alt="im"></a>
                                     </li>
                                     <li class="list-group-item border-0 pb-0">
-                                       <a href="#"><img src="../../assets/images/brands/li.svg" alt="li"></a>
+                                       <a href="#"><img src="../assets/images/brands/li.svg" alt="li"></a>
                                     </li>
                                  </ul>
                               </div>
                               <p class="mt-3 text-center">
-                                 Don’t have an account? <a href="sign-up.html" class="text-underline">Click here to sign up.</a>
+                                 Don’t have an account? <a href='index.php?r=site%2Fregister#' class="text-underline">Click here to sign up.</a>
                               </p>
 
     <?php ActiveForm::end(); ?>
-<!-- 
-    <div class="offset-lg-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-    </div> -->
 </div>

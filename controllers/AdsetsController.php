@@ -51,11 +51,11 @@ class AdsetsController extends Controller
      */
     public function actionIndex()
     {
-        $IdUser=Yii::$app->user->identity->id;
+        //$IdUser=Yii::$app->user->identity->id;
         $model = new Campaing;
         $IdCampaing = $model->id;
         $dataProvider = new ActiveDataProvider([
-            // 'query' => Adsets::find()
+            'query' => Adsets::find()
             // 'query' => Adsets::findBySql('SELECT us.id, us.username,ad.id,ad.id_campaing,ad.nombre FROM users as us, campaing as ca, adsets as ad WHERE us.id=ca.id_user 
             // and ca.id=ad.id_campaing and us.id=:id
             // ', [':id'=>$IdUser]),

@@ -1,48 +1,94 @@
 <?php
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+// use yii\helpers\Html;
+// use yii\widgets\ActiveForm;
+
+
+use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
+
+
+// $this->title = 'Sign Up';
+// $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <h3><?= $msg ?></h3>
-
-<h1><?=\Yii::t('app', 'Registro de nuevos usuarios') ?></h1>
 <?php $form = ActiveForm::begin([
         // "method"=>"post",
         // 'enableClientValidation'=>true,
     
-    'method' => 'post',
+    // 'method' => 'post',
+    // 'id' => 'formulario',
+    // 'enableClientValidation' => false, //
+    // 'enableAjaxValidation' => true,// validacion ajax para confirmar si existen usuario y email en la tabla users
+
+
+    //    - -------------------------- INYECCION DE CODIGO ---------------------
     'id' => 'formulario',
-    'enableClientValidation' => false, //
-    'enableAjaxValidation' => true,// validacion ajax para confirmar si existen usuario y email en la tabla users
-]);
-?>
-<div class="form-group">
- <?= $form->field($model, "username")->label(\Yii::t('app', 'Nombre de usuario')) ?>   
+    'layout' => 'horizontal',
+    'fieldConfig' => [
+        //'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+        'template' => "<div class=\"col-lg-6\">
+         <div class=\"form-group\">
+           <label for=\"full-name\" class=\"form-label\">{label}</label>
+           {input}
+        </div>
+     </div>",
+     'labelOptions' => ['class' => ''],
+    ],
+]);?>
+
+
+<div class="row">
+    <?= $form->field($model, "username")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'USER']])//->label(\Yii::t('app', 'Nombre de usuario')) ?>   
+    <?= $form->field($model, "full_name")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'NOMBRES']])//label('Nombre completo') ?>   
+    <?= $form->field($model, "last_name")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'APELLIDOS']])//label('Apellidos') ?>   
+    <?= $form->field($model, "email")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']])//->label('Correo') ?>   
+    <?= $form->field($model, "phone")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'TELEFONO']])//input("text")->label('Telefono') ?>   
+    <?= $form->field($model, "password")->passwordInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'CLAVE']])//->label('Contraseña') ?>   
+    <?= $form->field($model, "password_repeat")->passwordInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'REPITA LA CLAVE']])//->label('Contraseña')//label('Repita la contraseña') ?>   
+    <?= $form->field($model, 'CONDICIONES')->checkbox([
+    'template'=>"<div class=\"col-lg-12 d-flex justify-content-center\">
+                                    <div class=\"form-check mb-3\">
+                                       {input}
+                                       <label class=\"form-check-label\" for=\"FormRegister_CONDICIONES\">I agree with the terms of use</label>
+                                    </div>
+                                 </div>", 
+                                 'inputOptions'=>['class'=>'form-check-input']]) ?>
+
+</row>
+
+
+
+<div class="d-flex justify-content-center">
+    <?=Html::submitButton("Registrar",["class"=>"btn btn-primary",'name'=>'form-button'])?>
 </div>
 
-<div class="form-group">
- <?= $form->field($model, "full_name")->label('Nombre completo') ?>   
-</div>
 
-<div class="form-group">
- <?= $form->field($model, "last_name")->label('Apellidos') ?>   
-</div>
 
-<div class="form-group">
- <?= $form->field($model, "email")->input("email")->label('Correo') ?>   
-</div>
+<p class="text-center my-3">or sign in with other accounts?</p>
 
-<div class="form-group">
- <?= $form->field($model, "phone")->input("text")->label('Telefono') ?>   
-</div>
+<div class="d-flex justify-content-center">
+                                 <ul class="list-group list-group-horizontal list-group-flush">
+                                    <li class="list-group-item border-0 pb-0">
+                                       <a href="#"><img src="../assets/images/brands/fb.svg" alt="fb"></a>
+                                    </li>
+                                    <li class="list-group-item border-0 pb-0">
+                                       <a href="#"><img src="../assets/images/brands/gm.svg" alt="gm"></a>
+                                    </li>
+                                    <li class="list-group-item border-0 pb-0">
+                                       <a href="#"><img src="../assets/images/brands/im.svg" alt="im"></a>
+                                    </li>
+                                    <li class="list-group-item border-0 pb-0">
+                                       <a href="#"><img src="../assets/images/brands/li.svg" alt="li"></a>
+                                    </li>
+                                 </ul>
+                              </div>
 
-<div class="form-group">
- <?= $form->field($model, "password")->input("password")->label('Contraseña') ?>   
-</div>
+                              <p class="mt-3 text-center">
+                                 Already have an Account <a href="sign-in.html" class="text-underline">Sign In</a>
+                              </p>
 
-<div class="form-group">
- <?= $form->field($model, "password_repeat")->input("password")->label('Repita la contraseña') ?>   
-</div>
 
-<?=Html::submitButton("Registrar",["class"=>"btn btn-primary"])?>
+
 <?php $form->end()?>
