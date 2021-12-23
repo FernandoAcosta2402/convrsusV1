@@ -3,15 +3,16 @@
  namespace app\models;
  use yii;
  use yii\base\Model;
- use app\models\Users;
+ use app\models\Usuario;
 
 class FormRegister extends Model{
  
-    public $username;
-    public $full_name;
-    public $last_name;
+   // public $idUsuario;
+    public $idTipoUsuario;
+    public $nombre;
+    public $apellido;
     public $email;
-    public $phone;
+    public $telefono;
     public $password;
     public $password_repeat;
     public $CONDICIONES = true;
@@ -20,16 +21,29 @@ class FormRegister extends Model{
     public function rules()
     {
         return [
-            [['username','full_name','last_name', 'email','phone', 'password', 'password_repeat'], 'required', 'message' => 'Campo requerido'],
-            ['username', 'match', 'pattern' => "/^.{3,50}$/", 'message' => 'Mínimo 3 y máximo 50 caracteres'],
-            ['username', 'match', 'pattern' => "/^[0-9a-z]+$/i", 'message' => 'Sólo se aceptan letras y números'],
-            ['username', 'username_existe'],
-            ['email', 'match', 'pattern' => "/^.{5,80}$/", 'message' => 'Mínimo 5 y máximo 80 caracteres'],
-            ['email', 'email', 'message' => 'Formato no válido'],
-            ['email', 'email_existe'],
-            ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 8 y máximo 16 caracteres'],
-            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => 'Los passwords no coinciden'],
-            ['rememberMe', 'boolean'],
+
+          [['idTipoUsuario','nombre', 'apellido', 'email', 'telefono','password', 'password_repeat'], 'required', 'message' => 'Campo requerido'],
+         // ['nombre', 'apellido'], 'string', 'max' => 100],
+         // ['email', 'match', 'pattern' => "/^.{5,80}$/", 'message' => 'Mínimo 5 y máximo 80 caracteres'],
+          ['email', 'email', 'message' => 'Formato no válido'],
+          ['email', 'email_existe'],
+          ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 8 y máximo 16 caracteres'],
+          ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => 'Los passwords no coinciden'],
+          // [['idEmpresa'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idEmpresa' => 'idEmpresa']],
+          // [['idMarca'], 'exist', 'skipOnError' => true, 'targetClass' => Marca::className(), 'targetAttribute' => ['idMarca' => 'idMarca']],
+          // [['idTipoUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => TipoUsuario::className(), 'targetAttribute' => ['idTipoUsuario' => 'idTipoUsuario']],
+         // ['rememberMe', 'boolean'],
+
+          
+            // [['username','full_name','last_name', 'email','phone', 'password', 'password_repeat'], 'required', 'message' => 'Campo requerido'],
+            // ['username', 'match', 'pattern' => "/^.{3,50}$/", 'message' => 'Mínimo 3 y máximo 50 caracteres'],
+            // ['username', 'match', 'pattern' => "/^[0-9a-z]+$/i", 'message' => 'Sólo se aceptan letras y números'],
+            // ['email', 'match', 'pattern' => "/^.{5,80}$/", 'message' => 'Mínimo 5 y máximo 80 caracteres'],
+            // ['email', 'email', 'message' => 'Formato no válido'],
+            // ['email', 'email_existe'],
+            // ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 8 y máximo 16 caracteres'],
+            // ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => 'Los passwords no coinciden'],
+            // ['rememberMe', 'boolean'],
             
         ];
     }
@@ -38,7 +52,7 @@ class FormRegister extends Model{
     {
   
   //Buscar el email en la tabla
-  $table = Users::find()->where("email=:email", [":email" => $this->email]);
+  $table = Usuario::find()->where("email=:email", [":email" => $this->email]);
   
   //Si el email existe mostrar el error
   if ($table->count() == 1)
@@ -47,16 +61,17 @@ class FormRegister extends Model{
   }
     }
  
-    public function username_existe($attribute, $params)
-    {
-  //Buscar el username en la tabla
-  $table = Users::find()->where("username=:username", [":username" => $this->username]);
+  //   public function username_existe($attribute, $params)
   
-  //Si el username existe mostrar el error
-  if ($table->count() == 1)
-  {
-                $this->addError($attribute, "El usuario seleccionado existe");
-  }
-    }
+  //   {
+  // //Buscar el correo en la tabla
+  // $table = Users::find()->where("username=:username", [":username" => $this->username]);
+  
+  // //Si el username existe mostrar el error
+  // if ($table->count() == 1)
+  // {
+  //               $this->addError($attribute, "El usuario seleccionado existe");
+  // }
+  //   }
  
 }

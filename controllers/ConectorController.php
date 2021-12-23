@@ -2,18 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Adsets;
-use app\models\Campaing;
+use app\models\Conector;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
- * AdsetsController implements the CRUD actions for Adsets model.
+ * ConectorController implements the CRUD actions for Conector model.
  */
-class AdsetsController extends Controller
+class ConectorController extends Controller
 {
     /**
      * @inheritDoc
@@ -23,18 +21,6 @@ class AdsetsController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                //CONTROL DE ACCESO Backend
-                'access'=>[
-                    'class'=>AccessControl::className(),
-                    'rules'=>[
-                        [
-                            'allow'=>true,
-                            'roles'=>['@']
-                        ]
-                    ]
-                ],
-                
-            //-----------------------------------------------------
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -46,64 +32,55 @@ class AdsetsController extends Controller
     }
 
     /**
-     * Lists all Adsets models.
+     * Lists all Conector models.
      * @return mixed
      */
     public function actionIndex()
     {
-        //$IdUser=Yii::$app->user->identity->id;
-        $model = new Campaing;
-        $IdCampaing = $model->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => Adsets::find()
-            // 'query' => Adsets::findBySql('SELECT us.id, us.username,ad.id,ad.id_campaing,ad.nombre FROM users as us, campaing as ca, adsets as ad WHERE us.id=ca.id_user 
-            // and ca.id=ad.id_campaing and us.id=:id
-            // ', [':id'=>$IdUser]),
-            
-            //->with('Campaing')->where(["id_user"=>$IdUser])
-           // 'query' => Adsets::find()-> where(["id_campaing"=>$IdUser])
+            'query' => Conector::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'id' => SORT_DESC,
+                    'idConector' => SORT_DESC,
                 ]
             ],
             */
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Adsets model.
-     * @param int $id ID
+     * Displays a single Conector model.
+     * @param string $idConector Id Conector
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($idConector)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($idConector),
         ]);
     }
 
     /**
-     * Creates a new Adsets model.
+     * Creates a new Conector model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Adsets();
+        $model = new Conector();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'idConector' => $model->idConector]);
             }
         } else {
             $model->loadDefaultValues();
@@ -115,18 +92,18 @@ class AdsetsController extends Controller
     }
 
     /**
-     * Updates an existing Adsets model.
+     * Updates an existing Conector model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
+     * @param string $idConector Id Conector
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($idConector)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($idConector);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'idConector' => $model->idConector]);
         }
 
         return $this->render('update', [
@@ -135,29 +112,29 @@ class AdsetsController extends Controller
     }
 
     /**
-     * Deletes an existing Adsets model.
+     * Deletes an existing Conector model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
+     * @param string $idConector Id Conector
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($idConector)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($idConector)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Adsets model based on its primary key value.
+     * Finds the Conector model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Adsets the loaded model
+     * @param string $idConector Id Conector
+     * @return Conector the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($idConector)
     {
-        if (($model = Adsets::findOne($id)) !== null) {
+        if (($model = Conector::findOne($id)) !== null) {
             return $model;
         }
 

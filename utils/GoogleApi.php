@@ -42,7 +42,7 @@ class GoogleApi
      * @var string the redirect URI for OAuth2 installed application flows
      * @see https://developers.google.com/identity/protocols/OAuth2InstalledApp#formingtheurl
      */
-    const REDIRECT_URI = 'https://dev.convrsus.ai/~estevar/convrsusV1/web/google-actions/getrefreshtoken';
+    const REDIRECT_URI = 'https://dev.convrsus.ai/convrsusV1/web/index.php?r=google-actions/getrefreshtoken';
     
 
     const CLIENT_ID = "130187367003-rrae1b66bhu6ncc8aj027uub94m9s7mk.apps.googleusercontent.com";

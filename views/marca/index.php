@@ -2,42 +2,37 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
-
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Campaings');
-
-//$this->id = Yii::t('app', 'Campaings');
+$this->title = 'Marcas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="campaing-index">
+<div class="marca-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    
-    <!-- PRUEBA IMPRIMIR ID  -->
-    <h1><?= Html::encode($IdUser) ?></h1>
 
     <p>
-    <?= Html::a(Yii::t('app', 'Create Campaing'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Marca', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?php Pjax::begin(); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'id_user',
+            'idMarca',
+            'idEmpresa',
             'nombre',
-            'fecha_inicio',
-            'fecha_termino',
+            'logo',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 
+    <?php Pjax::end(); ?>
 
 </div>

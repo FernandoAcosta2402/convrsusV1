@@ -31,9 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
         <?= $form->field($model, 'email')->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']]) ?>
-
-        <?= $form->field($model, 'password')->passwordInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']]) ?>
-
+        <?= $form->field($model, 'password')->passwordInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']]) ?>      
         <?= $form->field($model, 'rememberMe')->checkbox([
             'template' => "<div class=\"form-check mb-3\">
             {input}
@@ -88,3 +86,4 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php ActiveForm::end(); ?>
 </div>
+

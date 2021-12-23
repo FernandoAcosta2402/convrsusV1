@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Adsets */
+/* @var $model app\models\Empresa */
 
-$this->title = Yii::t('app', 'Create Adsets');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Adsets'), 'url' => ['index']];
+$this->title = 'Create Empresa';
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Empresas'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="adsets-create">
+<div class="empresa-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

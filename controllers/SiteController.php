@@ -12,7 +12,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use app\models\LoginForm;
 use app\models\FormRegister;
-use app\models\Users;
+use app\models\Usuario;
 use utils\GoogleApi\GoogleApi;
 //use utils\GoogleApi\GoogleApi as GoogleApiGoogleApi;
 
@@ -125,26 +125,26 @@ private function randKey($str='', $long=0)
   
  public function actionConfirm()
  {
-    $table = new Users;
+    $table = new Usuario;
     if (Yii::$app->request->get())
     {
    
         //Obtenemos el valor de los parámetros get
-        $id = Html::encode($_GET["id"]);
+        $idUser = Html::encode($_GET["idUser"]);
         $authKey = $_GET["authKey"];
     
-        if ((int) $id)
+        if ((int) $idUser)
         {
             //Realizamos la consulta para obtener el registro
             $model = $table
             ->find()
-            ->where("id=:id", [":id" => $id])
+            ->where("idUser=:idUser", [":idUser" => $idUser])
             ->andWhere("authKey=:authKey", [":authKey" => $authKey]);
  
             //Si el registro existe
             if ($model->count() == 1)
             {
-                $activar = Users::findOne($id);
+                $activar = Usuario::findOne($idUser);
                 $activar->activate = 1;
 
                 if ($activar->update())
@@ -172,6 +172,7 @@ private function randKey($str='', $long=0)
  
  public function actionRegister()
  {
+  $this->layout = "signup";
   //Creamos la instancia con el model de validación
   $model = new FormRegister;
    
@@ -191,12 +192,12 @@ private function randKey($str='', $long=0)
    if($model->validate())
    {
     //Preparamos la consulta para guardar el usuario
-    $table = new Users;
-    $table->username = $model->username;
-    $table->full_name = $model->full_name;
-    $table->last_name = $model->last_name;
+    $table = new Usuario;
+    $table->idTipoUsuario = $model->idTipoUsuario;
+    $table->nombre = $model->nombre;
+    $table->apellido = $model->apellido;
     $table->email = $model->email;
-    $table->phone=$model->phone;
+    $table->telefono=$model->telefono;
     //Encriptamos el password
     $table->password = crypt($model->password, Yii::$app->params["salt"]);
 
@@ -213,12 +214,12 @@ private function randKey($str='', $long=0)
      //Nueva consulta para obtener el id del usuario
      //Para confirmar al usuario se requiere su id y su authKey
      $user = $table->find()->where(["email" => $model->email])->one();
-     $id = urlencode($user->id);
+     $idUsuario = urlencode($user->idUsuario);
      $authKey = urlencode($user->authKey);
       
      $subject = "Confirmar registro";
      $body = "<h1>Haga click en el siguiente enlace para finalizar tu registro</h1>";
-     $body .= "<a href='http://yii.local/index.php?r=site/confirm?id=".$id."&authKey=".$authKey."'>Confirmar</a>";
+     $body .= "<a href='http://yii.local/index.php?r=site/confirm?id=".$idUsuario."&authKey=".$authKey."'>Confirmar</a>";
       
      //Enviamos el correo
     //  Yii::$app->mailer->compose()
@@ -228,11 +229,12 @@ private function randKey($str='', $long=0)
     //  ->setHtmlBody($body)
     //  ->send();
      
-     $model->username = null;
-     $model->full_name = null;
-     $model->last_name = null;
+     //$model-> = null;
+     $model->idTipoUsuario = null;
+     $model->nombre = null;
+     $model->apellido = null;
      $model->email = null;
-     $model->phone = null;
+     $model->telefono = null;
      $model->password = null;
      $model->password_repeat = null;
      
@@ -315,8 +317,8 @@ private function randKey($str='', $long=0)
      *
      * @return string
      */
-    public function actionAbout() {
-        return $this->render('about');
-    }
+    // public function actionAbout() {
+    //     return $this->render('about');
+    // }
 
 }

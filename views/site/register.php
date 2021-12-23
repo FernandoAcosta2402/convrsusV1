@@ -5,6 +5,7 @@
 
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
+use app\models\TipoUsuario;
 
 
 // $this->title = 'Sign Up';
@@ -24,11 +25,11 @@ use yii\bootstrap4\Html;
 
 
     //    - -------------------------- INYECCION DE CODIGO ---------------------
-    'id' => 'formulario',
+    'id' => 'register-form',
     'layout' => 'horizontal',
     'fieldConfig' => [
         //'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        'template' => "<div class=\"col-lg-6\">
+        'template' => "<div class=\"col-md-6\">
          <div class=\"form-group\">
            <label for=\"full-name\" class=\"form-label\">{label}</label>
            {input}
@@ -40,13 +41,53 @@ use yii\bootstrap4\Html;
 
 
 <div class="row">
-    <?= $form->field($model, "username")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'USER']])//->label(\Yii::t('app', 'Nombre de usuario')) ?>   
-    <?= $form->field($model, "full_name")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'NOMBRES']])//label('Nombre completo') ?>   
-    <?= $form->field($model, "last_name")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'APELLIDOS']])//label('Apellidos') ?>   
-    <?= $form->field($model, "email")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'E-Mail']])//->label('Correo') ?>   
-    <?= $form->field($model, "phone")->textInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'TELEFONO']])//input("text")->label('Telefono') ?>   
-    <?= $form->field($model, "password")->passwordInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'CLAVE']])//->label('Contraseña') ?>   
-    <?= $form->field($model, "password_repeat")->passwordInput(['inputOptions'=>['class'=>'form-control', 'placeholder'=>'REPITA LA CLAVE']])//->label('Contraseña')//label('Repita la contraseña') ?>   
+
+    <?= $form->field($model, "idTipoUsuario" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
+         <div class=\"form-group\">
+           <label for=\"full-name\" class=\"form-label\">{label}</label>
+           {input}
+        </div>
+     </div>"])->dropDownList(\yii\helpers\ArrayHelper::map(TipoUsuario::find()->all(),'idTipoUsuario','tipousuario'),['prompt' => 'Tipo']);//->label(\Yii::t('app', 'Nombre de usuario')) ?>   
+    <?= $form->field($model, "nombre" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
+         <div class=\"form-group\">
+           <label for=\"full-name\" class=\"form-label\">{label}</label>
+           {input}
+        </div>
+     </div>"])->textInput(['class'=>'form-control', 'placeholder'=>'NOMBRES'])//label('Nombre completo') ?>   
+    
+    <?= $form->field($model, "apellido" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
+         <div class=\"form-group\">
+           <label for=\"full-name\" class=\"form-label\">{label}</label>
+           {input}
+        </div>
+     </div>"])->textInput(['class'=>'form-control', 'placeholder'=>'APELLIDOS'])//label('Apellidos') ?>   
+    
+    <?= $form->field($model, "email" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
+         <div class=\"form-group\">
+           <label for=\"full-name\" class=\"form-label\">{label}</label>
+           {input}
+        </div>
+     </div>"])->textInput(['class'=>'form-control', 'placeholder'=>'E-Mail'])//->label('Correo') ?>   
+   
+    <?= $form->field($model, "telefono" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
+         <div class=\"form-group\">
+           <label for=\"full-name\" class=\"form-label\">{label}</label>
+           {input}
+        </div>
+     </div>"])->textInput(['class'=>'form-control', 'placeholder'=>'TELEFONO'])//input("text")->label('Telefono') ?>   
+  
+  <?= $form->field($model, "password" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
+         <div class=\"form-group\">
+           <label for=\"full-name\" class=\"form-label\">{label}</label>
+           {input}
+        </div>
+     </div>"])->passwordInput(['class'=>'form-control', 'placeholder'=>'CLAVE'])//->label('Contraseña') ?>   
+    <?= $form->field($model, "password_repeat" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
+         <div class=\"form-group\">
+           <label for=\"full-name\" class=\"form-label\">{label}</label>
+           {input}
+        </div>
+     </div>"])->passwordInput(['class'=>'form-control', 'placeholder'=>'REPITA LA CLAVE'])//->label('Contraseña')//label('Repita la contraseña') ?>   
     <?= $form->field($model, 'CONDICIONES')->checkbox([
     'template'=>"<div class=\"col-lg-12 d-flex justify-content-center\">
                                     <div class=\"form-check mb-3\">
@@ -55,16 +96,11 @@ use yii\bootstrap4\Html;
                                     </div>
                                  </div>", 
                                  'inputOptions'=>['class'=>'form-check-input']]) ?>
-
 </row>
-
-
 
 <div class="d-flex justify-content-center">
     <?=Html::submitButton("Registrar",["class"=>"btn btn-primary",'name'=>'form-button'])?>
 </div>
-
-
 
 <p class="text-center my-3">or sign in with other accounts?</p>
 
@@ -86,9 +122,8 @@ use yii\bootstrap4\Html;
                               </div>
 
                               <p class="mt-3 text-center">
-                                 Already have an Account <a href="sign-in.html" class="text-underline">Sign In</a>
+                                 Already have an Account <a href="index.php?r=site%2Flogin#" class="text-underline">Sign In</a>
                               </p>
 
-
-
 <?php $form->end()?>
+

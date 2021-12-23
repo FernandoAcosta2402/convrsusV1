@@ -5,12 +5,25 @@ namespace app\models;
 class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 {
     
-    public $id;
-    public $username;
-    public $full_name;
-    public $last_name;
+    // public $id;
+    // public $username;
+    // public $full_name;
+    // public $last_name;
+    // public $email;
+    // public $phone;
+    // public $password;
+    // public $authKey;
+    // public $accessToken;
+    // public $activate;
+
+    public $idUsuario;
+    public $idEmpresa;
+    public $idMarca;
+    public $idTipoUsuario;
+    public $nombre;
+    public $apellido;
     public $email;
-    public $phone;
+    public $telefono;
     public $password;
     public $authKey;
     public $accessToken;
@@ -21,12 +34,12 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     
     /* busca la identidad del usuario a través de su $id */
-    public static function findIdentity($id)
+    public static function findIdentity($idUsuario)
     {
         
-        $user = Users::find()
+        $user = Usuario::find()
                 ->where("activate=:activate", [":activate" => 1])
-                ->andWhere("id=:id", ["id" => $id])
+                ->andWhere("idUsuario=:idUsuario", ["idUsuario" => $idUsuario])
                 ->one();
         
         return isset($user) ? new static($user) : null;
@@ -40,12 +53,12 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         
-        $users = Users::find()
+        $users = Usuario::find()
                 ->where("activate=:activate", [":activate" => 1])
                 ->andWhere("accessToken=:accessToken", [":accessToken" => $token])
                 ->all();
         
-        foreach ($users as $user) {
+        foreach ($Usuario as $user) {
             if ($user->accessToken === $token) {
                 return new static($user);
             }
@@ -59,12 +72,12 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     // Busca la identidad del usuario a través del email 
     public static function findByEmail($email)
     {
-        $users = Users::find()
+        $usuario = Usuario::find()
                 ->where("activate=:activate", ["activate" => 1])
                 ->andWhere("email=:email", [":email" => $email])
                 ->all();
         
-        foreach ($users as $user) {
+        foreach ($usuario as $user) {
             if (strcasecmp($user->email, $email) === 0) {
                 return new static($user);
             }
@@ -78,7 +91,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     /* Regresa el id del usuario */
     public function getId()
     {
-        return $this->id;
+        return $this->idUsuario;
         
     }
 

@@ -11,6 +11,7 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
 
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -104,16 +105,18 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav'],
         'items' => [
           ['label' => 'Home', 'url' => ['/site/index']],
-          ['label' => 'About', 'url' => ['/site/about']],
+         // ['label' => 'EMPRESA', 'url' => ['/empresa/index']],
           
 
           //Ocultando vista de campañas si no esta logueado
           (!Yii::$app->user->isGuest)?(
-            ['label' => 'Campaing', 'url' => ['/campaing/index']])
+            ['label' => 'Empresa', 'url' => ['/empresa/index']])
             :(""),
-          (!Yii::$app->user->isGuest)?(
-            ['label' => 'Asets', 'url' => ['/adsets/index']])
-            :(""),
+         
+         
+            // (!Yii::$app->user->isGuest)?(
+            // ['label' => 'Asets' , 'url' => ['/adsets/index']])
+            // :(""),
           //------------------------
           (Yii::$app->user->isGuest)?(
             ['label' => 'Registro', 'url' => ['/site/register']])
@@ -123,7 +126,7 @@ AppAsset::register($this);
           Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : ('<li>'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
             . Html::submitButton(
-              'Logout (' . Yii::$app->user->identity->username . ')',
+              'Logout (' . Yii::$app->user->identity->nombre . ')',
               ['class' => 'btn btn-link logout bg-info']
             )
             . Html::endForm()
@@ -133,6 +136,8 @@ AppAsset::register($this);
       NavBar::end();
 
       ?>
+
+
           </div> <!-- container-fluid.// -->
         </nav>
   </header>
