@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Marca;
+use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -134,7 +135,7 @@ class MarcaController extends Controller
      */
     protected function findModel($idMarca)
     {
-        if (($model = Marca::findOne($id)) !== null) {
+        if (($model = Marca::findOne($idMarca)) !== null) {
             return $model;
         }
 

@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="d-flex justify-content-center">
     <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
 </div>
-        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+        <!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
         <script>
 
             
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             var id_token = googleUser.getAuthResponse().id_token;
             console.log("ID Token: " + id_token);
         }
-        </script>
+        </script> -->
         
         <p class="text-center my-3">or sign in with other accounts?</p>
                               <div class="d-flex justify-content-center">
@@ -69,9 +69,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <li class="list-group-item border-0 pb-0">
                                        <a href="#"><img src="../assets/images/brands/fb.svg" alt="fb"></a>
                                     </li>
+
+                                    <!-- INCIO DE SESION CON GOOGLE  -->
                                     <li class="list-group-item border-0 pb-0">
                                        <a href="#"><img src="../assets/images/brands/gm.svg" alt="gm"></a>
                                     </li>
+                                    <!-- FIN DE INICIO DE SESION GOOGLE  -->
+                                    
                                     <li class="list-group-item border-0 pb-0">
                                        <a href="#"><img src="../assets/images/brands/im.svg" alt="im"></a>
                                     </li>

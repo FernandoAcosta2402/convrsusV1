@@ -13,6 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+        <!-- PRUEBA IMPRIMIR ID  -->
+        <h1><?= Html::encode($IdUser) ?></h1>
+
     <p>
         <?= Html::a('Create Empresa', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -24,13 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idEmpresa',
+            //'idEmpresa',
             'nombre',
             'direccion',
             'direccion2',
             'razonsocial',
-            //'rfc',
-            //'logo',
+            'rfc',
+            'logo',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

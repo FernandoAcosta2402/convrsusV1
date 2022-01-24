@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use app\models\user;
+use Yii;
 
 /**
  * EmpresaController implements the CRUD actions for Empresa model.
@@ -52,8 +54,10 @@ class EmpresaController extends Controller
      */
     public function actionIndex()
     {
+        $IdUser=Yii::$app->user->identity->idUsuario;
+        //$IdUser=Yii::$app->user->identity->idEmpresa;
         $dataProvider = new ActiveDataProvider([
-            'query' => Empresa::find(),
+            'query' => Empresa::find($IdUser)//->where(["idEmpresa"=>$IdUser]),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -67,7 +71,7 @@ class EmpresaController extends Controller
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,'IdUser'=>$IdUser
         ]);
     }
 

@@ -12,6 +12,29 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+//-----------------------------------AUTENTICACION GOOGLE Y DEMAS -----------------------------
+'authClientCollection' => [
+    'class' => 'yii\authclient\Collection',
+    'clients' => [
+        'google' => [
+            'class' => 'yii\authclient\clients\Google',
+            'clientId' => '151423821357-iat72l3nhbrok24bevdekd62dvqfiolk.apps.googleusercontent.com',
+            'clientSecret' => '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',
+         ],
+        'facebook' => [
+            'class' => 'yii\authclient\clients\Facebook',
+            'clientId' => 'facebook_client_id',
+            'clientSecret' => 'facebook_client_secret',
+        ],
+    ],
+],
+//--------------------------- FIN DE ATENTICACION --------------------------------
+
+
+
+
+
+
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'ewc4ZhIeJk2itFYDWi07uzmAd__Nt7m-',

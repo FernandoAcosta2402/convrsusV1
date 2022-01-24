@@ -42,52 +42,46 @@ use app\models\TipoUsuario;
 
 <div class="row">
 
-    <?= $form->field($model, "idTipoUsuario" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
+      <?= $form->field($model, "nombre" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
          <div class=\"form-group\">
            <label for=\"full-name\" class=\"form-label\">{label}</label>
            {input}
         </div>
-     </div>"])->dropDownList(\yii\helpers\ArrayHelper::map(TipoUsuario::find()->all(),'idTipoUsuario','tipousuario'),['prompt' => 'Tipo']);//->label(\Yii::t('app', 'Nombre de usuario')) ?>   
-    <?= $form->field($model, "nombre" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
-         <div class=\"form-group\">
-           <label for=\"full-name\" class=\"form-label\">{label}</label>
-           {input}
-        </div>
-     </div>"])->textInput(['class'=>'form-control', 'placeholder'=>'NOMBRES'])//label('Nombre completo') ?>   
+     </div>"])->textInput(['class'=>'form-control'])//label('Nombre completo') ?>   
     
     <?= $form->field($model, "apellido" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
          <div class=\"form-group\">
            <label for=\"full-name\" class=\"form-label\">{label}</label>
            {input}
         </div>
-     </div>"])->textInput(['class'=>'form-control', 'placeholder'=>'APELLIDOS'])//label('Apellidos') ?>   
+     </div>"])->textInput(['class'=>'form-control'])//label('Apellidos') ?>   
     
     <?= $form->field($model, "email" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
          <div class=\"form-group\">
            <label for=\"full-name\" class=\"form-label\">{label}</label>
            {input}
         </div>
-     </div>"])->textInput(['class'=>'form-control', 'placeholder'=>'E-Mail'])//->label('Correo') ?>   
+     </div>"])->textInput(['class'=>'form-control'])//->label('Correo') ?>   
    
     <?= $form->field($model, "telefono" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
          <div class=\"form-group\">
            <label for=\"full-name\" class=\"form-label\">{label}</label>
            {input}
         </div>
-     </div>"])->textInput(['class'=>'form-control', 'placeholder'=>'TELEFONO'])//input("text")->label('Telefono') ?>   
+     </div>"])->textInput(['class'=>'form-control'])//input("text")->label('Telefono') ?>   
   
   <?= $form->field($model, "password" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
          <div class=\"form-group\">
            <label for=\"full-name\" class=\"form-label\">{label}</label>
            {input}
         </div>
-     </div>"])->passwordInput(['class'=>'form-control', 'placeholder'=>'CLAVE'])//->label('Contraseña') ?>   
+     </div>"])->passwordInput(['class'=>'form-control'])//->label('Contraseña') ?>   
     <?= $form->field($model, "password_repeat" ,['options'=>['tag'=>false],'template' => "<div class=\"col-md-6\">
          <div class=\"form-group\">
            <label for=\"full-name\" class=\"form-label\">{label}</label>
            {input}
         </div>
-     </div>"])->passwordInput(['class'=>'form-control', 'placeholder'=>'REPITA LA CLAVE'])//->label('Contraseña')//label('Repita la contraseña') ?>   
+     </div>"])->passwordInput(['class'=>'form-control'])//->label('Contraseña')//label('Repita la contraseña') ?>   
     <?= $form->field($model, 'CONDICIONES')->checkbox([
     'template'=>"<div class=\"col-lg-12 d-flex justify-content-center\">
                                     <div class=\"form-check mb-3\">

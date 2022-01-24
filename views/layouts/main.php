@@ -121,6 +121,10 @@ AppAsset::register($this);
           (Yii::$app->user->isGuest)?(
             ['label' => 'Registro', 'url' => ['/site/register']])
             :(""),
+
+            (Yii::$app->user->isGuest)?(
+              ['label' => 'Marca', 'url' => ['/marca/index']])
+              :(""),
             
             //['label' => 'Registro', 'url' => ['/site/register']],
           Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : ('<li>'

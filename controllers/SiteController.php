@@ -108,7 +108,7 @@ class SiteController extends Controller {
 
 
   
-//---------------------------------------REGISTRO CON CONFIRMACION DE CORREO ---------------------------------
+//--------------------------------------- REGISTRO CON CONFIRMACION DE CORREO ---------------------------------
 
 private function randKey($str='', $long=0)
     {
@@ -193,7 +193,7 @@ private function randKey($str='', $long=0)
    {
     //Preparamos la consulta para guardar el usuario
     $table = new Usuario;
-    $table->idTipoUsuario = $model->idTipoUsuario;
+   // $table->idTipoUsuario = $model->idTipoUsuario;
     $table->nombre = $model->nombre;
     $table->apellido = $model->apellido;
     $table->email = $model->email;
@@ -230,7 +230,7 @@ private function randKey($str='', $long=0)
     //  ->send();
      
      //$model-> = null;
-     $model->idTipoUsuario = null;
+    // $model->idTipoUsuario = null;
      $model->nombre = null;
      $model->apellido = null;
      $model->email = null;
@@ -255,10 +255,104 @@ private function randKey($str='', $long=0)
  }
 
 
+ 
+
+
 //---------------------------------------FIN DE RESGITRO--------------------------------
 
 
+ public function actionRegisterEmpresa()
+ {
+  $this->layout = "registerEmpresa";
+  //Creamos la instancia con el model de validación
+  $model = new FormRegister;
+   
+  //Mostrará un mensaje en la vista cuando el usuario se haya registrado
+  $msg = null;
+   
+  //Validación mediante ajax
+  if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax)
+        {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+   
+  //Validación cuando el formulario es enviado vía post
+  if ($model->load(Yii::$app->request->post()))
+  {
+   if($model->validate())
+   {
+    //Preparamos la consulta para guardar el usuario
+    $table = new Usuario;
+   // $table->idTipoUsuario = $model->idTipoUsuario;
+    $table->nombre = $model->nombre;
+    $table->apellido = $model->apellido;
+    $table->email = $model->email;
+    $table->telefono=$model->telefono;
+    //Encriptamos el password
+    $table->password = crypt($model->password, Yii::$app->params["salt"]);
 
+    
+    //Creamos una cookie para autenticar al usuario cuando decida recordar la sesión, esta misma
+    //clave será utilizada para activar el usuario
+    $table->authKey = $this->randKey("abcdef0123456789", 200);
+    //Creamos un token de acceso único para el usuario
+    $table->accessToken = $this->randKey("abcdef0123456789", 200);
+     
+    //Si el registro es guardado correctamente
+    if ($table->insert())
+    {
+     //Nueva consulta para obtener el id del usuario
+     //Para confirmar al usuario se requiere su id y su authKey
+     $user = $table->find()->where(["email" => $model->email])->one();
+     $idUsuario = urlencode($user->idUsuario);
+     $authKey = urlencode($user->authKey);
+      
+     $subject = "Confirmar registro";
+     $body = "<h1>Haga click en el siguiente enlace para finalizar tu registro</h1>";
+     $body .= "<a href='http://yii.local/index.php?r=site/confirm?id=".$idUsuario."&authKey=".$authKey."'>Confirmar</a>";
+      
+     //Enviamos el correo
+    //  Yii::$app->mailer->compose()
+    //  ->setTo($user->email)
+    //  ->setFrom([Yii::$app->params["adminEmail"] => Yii::$app->params["title"]])
+    //  ->setSubject($subject)
+    //  ->setHtmlBody($body)
+    //  ->send();
+     
+     //$model-> = null;
+    // $model->idTipoUsuario = null;
+     $model->nombre = null;
+     $model->apellido = null;
+     $model->email = null;
+     $model->telefono = null;
+     $model->password = null;
+     $model->password_repeat = null;
+     
+     $msg = "Usuario registrado con exito";
+    }
+    else
+    {
+     $msg = "Ha ocurrido un error al llevar a cabo tu registro";
+    }
+     
+   }
+   else
+   {
+    $model->getErrors();
+   }
+  }
+  return $this->render("register", ["model" => $model, "msg" => $msg]);
+ }
+
+
+//-----------------------------------------REGISTRO DE EMPRESA -----------------------------------
+
+
+
+
+
+//--------------------------------------------------------------------------------
 
 
 //-------------------------------------------CONTROLADOR LOGIN

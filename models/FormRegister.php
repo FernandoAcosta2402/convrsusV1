@@ -22,7 +22,8 @@ class FormRegister extends Model{
     {
         return [
 
-          [['idTipoUsuario','nombre', 'apellido', 'email', 'telefono','password', 'password_repeat'], 'required', 'message' => 'Campo requerido'],
+          //[['idTipoUsuario','nombre', 'apellido', 'email', 'telefono','password', 'password_repeat'], 'required', 'message' => 'Campo requerido'],
+          [['nombre', 'apellido', 'email', 'telefono','password', 'password_repeat'], 'required', 'message' => 'Campo requerido'],
          // ['nombre', 'apellido'], 'string', 'max' => 100],
          // ['email', 'match', 'pattern' => "/^.{5,80}$/", 'message' => 'Mínimo 5 y máximo 80 caracteres'],
           ['email', 'email', 'message' => 'Formato no válido'],

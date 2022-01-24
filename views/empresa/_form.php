@@ -12,6 +12,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'id_user')->textInput(['readonly' => true, 'value' => Yii::$app->user->identity->id])?>
+
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'direccion')->textInput(['maxlength' => true]) ?>
